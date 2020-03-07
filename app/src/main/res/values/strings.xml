@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Pimp My Ride</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_car_list_fragment">Hello car list fragment</string>
+    <string name="hello_favorite_fragment">Hello favorite fragment</string>
+    <string name="hello_settings_fragment">Hello settings fragment</string>
+
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="settings">Settings</string>
+
+</resources>
