@@ -1,8 +1,12 @@
-package com.example.myapplication
+package com.example.myapplication.feature.main.presentation.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.myapplication.R
+import com.example.myapplication.feature.settings.presentation.view.fragment.SettingsFragment
+import com.example.myapplication.feature.car.presentation.view.fragment.CarListFragment
+import com.example.myapplication.feature.favorite.presentation.view.fragment.FavoriteFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,7 +33,10 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_settings -> {
-                    setContentLayout(SettingsFragment(), SettingsFragment.TAG)
+                    setContentLayout(
+                        SettingsFragment(),
+                        SettingsFragment.TAG
+                    )
                     true
                 }
 
