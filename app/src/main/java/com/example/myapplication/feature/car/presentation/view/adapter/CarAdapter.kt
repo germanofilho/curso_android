@@ -8,7 +8,9 @@ import com.example.myapplication.data.entity.Car
 import com.example.myapplication.R
 import kotlinx.android.synthetic.main.item_car.view.*
 
-class CarAdapter(private val cars: MutableList<Car>) : RecyclerView.Adapter<ViewHolder>(){
+class CarAdapter : RecyclerView.Adapter<ViewHolder>(){
+
+    private var cars = mutableListOf<Car>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_car, parent, false)
@@ -19,6 +21,11 @@ class CarAdapter(private val cars: MutableList<Car>) : RecyclerView.Adapter<View
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(cars[position])
+    }
+
+    fun addItem(carList: MutableList<Car>){
+        cars.addAll(carList)
+        notifyDataSetChanged()
     }
 }
 

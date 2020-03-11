@@ -34,8 +34,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_settings -> {
                     setContentLayout(
-                        SettingsFragment(),
-                        SettingsFragment.TAG
+                        SettingsFragment(), SettingsFragment.TAG
                     )
                     true
                 }

@@ -11,19 +11,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.data.entity.Car
 import com.example.myapplication.feature.car.presentation.view.adapter.CarAdapter
 import com.example.myapplication.R
+import com.example.myapplication.feature.car.presentation.CarPresentation
+import com.example.myapplication.feature.car.presentation.presenter.CarPresenterImpl
 import kotlinx.android.synthetic.main.fragment_car_list.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class CarListFragment : Fragment() {
+class CarListFragment : Fragment(), CarPresentation.View {
+    
+    private val presenter : CarPresentation.Presenter by lazy {
+        CarPresenterImpl(this)
+    }
 
     companion object {
         const val TAG = "CarListFragment"
     }
 
     private val adapter : CarAdapter by lazy {
-        CarAdapter(populateCarList())
+        CarAdapter()
     }
 
     private val recyclerView : RecyclerView by lazy {
@@ -38,7 +44,7 @@ class CarListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
+        presenter.fetchCarList()
     }
 
     private fun initRecyclerView(){
@@ -46,19 +52,17 @@ class CarListFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
+    
+    override fun showCarList(carList: MutableList<Car>) {
+        initRecyclerView()
+        adapter.addItem(carList)
+    }
 
-    private fun populateCarList() : MutableList<Car> {
-        val carList : MutableList<Car> = mutableListOf()
+    override fun showLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-        for(i in 1..10){
-            carList.add(
-                Car(
-                    1, "Honda Fit", "",
-                    "Honda", "20", 200.000, ""
-                )
-            )
-        }
-
-        return carList
+    override fun hideLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
