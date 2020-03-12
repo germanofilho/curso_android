@@ -1,35 +1,43 @@
-package com.example.myapplication.feature.car.presentation.view.fragment
+package com.example.myapplication.feature.car.carlist.presentation.view.fragment
 
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.data.entity.Car
-import com.example.myapplication.feature.car.presentation.view.adapter.CarAdapter
 import com.example.myapplication.R
-import com.example.myapplication.feature.car.presentation.CarPresentation
-import com.example.myapplication.feature.car.presentation.presenter.CarPresenterImpl
+import com.example.myapplication.data.entity.car.Car
+import com.example.myapplication.feature.car.cardetail.CarDetailActivity
+import com.example.myapplication.feature.car.carlist.presentation.CarPresentation
+import com.example.myapplication.feature.car.carlist.presentation.presenter.CarPresenterImpl
+import com.example.myapplication.feature.car.carlist.presentation.view.adapter.CarAdapter
 import kotlinx.android.synthetic.main.fragment_car_list.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class CarListFragment : Fragment(), CarPresentation.View {
-    
-    private val presenter : CarPresentation.Presenter by lazy {
-        CarPresenterImpl(this)
-    }
 
     companion object {
         const val TAG = "CarListFragment"
     }
 
+    private val presenter : CarPresentation.Presenter by lazy {
+        CarPresenterImpl(this)
+    }
+
     private val adapter : CarAdapter by lazy {
-        CarAdapter()
+        CarAdapter(
+            onItemClickListener = {
+                val intent = Intent(context, CarDetailActivity::class.java)
+                intent.putExtra("car", it)
+                startActivity(intent)
+            })
     }
 
     private val recyclerView : RecyclerView by lazy {
@@ -44,6 +52,7 @@ class CarListFragment : Fragment(), CarPresentation.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
         presenter.fetchCarList()
     }
 
@@ -52,9 +61,7 @@ class CarListFragment : Fragment(), CarPresentation.View {
         recyclerView.adapter = adapter
     }
 
-    
     override fun showCarList(carList: MutableList<Car>) {
-        initRecyclerView()
         adapter.addItem(carList)
     }
 
@@ -64,5 +71,9 @@ class CarListFragment : Fragment(), CarPresentation.View {
 
     override fun hideLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError() {
+        Toast.makeText(context, getString(R.string.error_msg), Toast.LENGTH_SHORT).show()
     }
 }
