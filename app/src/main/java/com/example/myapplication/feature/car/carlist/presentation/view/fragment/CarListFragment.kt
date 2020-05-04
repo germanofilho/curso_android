@@ -66,11 +66,11 @@ class CarListFragment : Fragment(), CarPresentation.View {
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progress_bar.visibility = View.GONE
     }
 
     override fun showError() {

@@ -19,7 +19,6 @@
             android:layout_height="100dp"
             android:scaleType="fitCenter"
             android:contentDescription="@string/app_name"
-            android:src="@android:drawable/presence_audio_busy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

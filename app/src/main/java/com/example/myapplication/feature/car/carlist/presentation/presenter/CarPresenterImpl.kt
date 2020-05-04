@@ -16,16 +16,18 @@ class CarPresenterImpl(private val view: CarPresentation.View) : CarPresentation
     }
 
     override fun fetchCarList() {
+        view.showLoading()
         useCase.fetchCarList().enqueue(object : Callback<MutableList<Car>> {
-
             override fun onResponse(call: Call<MutableList<Car>>, response: Response<MutableList<Car>>) {
+                view.hideLoading()
                 response.body()?.let {
                     view.showCarList(response.body()!!)
                 }
             }
 
             override fun onFailure(call: Call<MutableList<Car>>, t: Throwable) {
-                    view.showError()
+                view.hideLoading()
+                view.showError()
             }
         })
     }

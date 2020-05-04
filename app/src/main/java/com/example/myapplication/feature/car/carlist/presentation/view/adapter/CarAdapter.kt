@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.data.entity.car.Car
 import com.example.myapplication.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_car.view.*
 
 class CarAdapter(private val onItemClickListener: ((Car) -> Unit)) : RecyclerView.Adapter<ViewHolder>(){
@@ -39,6 +40,11 @@ class ViewHolder(private val view: View, private val onItemClickListener: ((Car)
             tv_car_title.text = car.nome
             tv_car_quantity.text = car.quantidade
             tv_car_value.text = car.preco.toString()
+
+            Picasso.get()
+                .load(car.imagem)
+                .placeholder(R.drawable.placeholder)
+                .into(iv_item)
 
             //setup listener
             this.setOnClickListener {
