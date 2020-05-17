@@ -1,13 +1,11 @@
 package com.example.myapplication.data.source.remote.api.car
 
 import com.example.myapplication.data.entity.car.Car
-import retrofit2.Call
+import io.reactivex.Observable
 import retrofit2.http.GET
 
-interface CarApi{
-
+interface CarApi {
     @GET("carro")
-    fun getCarList(): Call<MutableList<Car>>
-
+    fun getCarList(): Observable<MutableList<Car>>
 }
 

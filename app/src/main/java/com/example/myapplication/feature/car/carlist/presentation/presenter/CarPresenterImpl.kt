@@ -1,34 +1,35 @@
 package com.example.myapplication.feature.car.carlist.presentation.presenter
 
-import com.example.myapplication.data.entity.car.Car
 import com.example.myapplication.feature.car.carlist.model.CarModel
-import com.example.myapplication.feature.car.carlist.model.usecase.CarUseCaseImpl
 import com.example.myapplication.feature.car.carlist.presentation.CarPresentation
-import retrofit2.Callback
-import retrofit2.Call
-import retrofit2.Response
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 
-class CarPresenterImpl(private val view: CarPresentation.View) : CarPresentation.Presenter {
+class CarPresenterImpl(val view: CarPresentation.View,private val useCase: CarModel.UseCase) : CarPresentation.Presenter {
 
-    private val useCase : CarModel.UseCase by lazy {
-        CarUseCaseImpl()
-    }
+    private val compositeDisposable by lazy { CompositeDisposable() }
 
     override fun fetchCarList() {
         view.showLoading()
-        useCase.fetchCarList().enqueue(object : Callback<MutableList<Car>> {
-            override fun onResponse(call: Call<MutableList<Car>>, response: Response<MutableList<Car>>) {
+        val disposable = useCase.fetchCarList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally {
                 view.hideLoading()
-                response.body()?.let {
-                    view.showCarList(response.body()!!)
+                compositeDisposable.clear()
+            }
+            .subscribe({
+                if(!it.isNullOrEmpty()){
+                    view.showCarList(it)
+                } else {
+                    view.showError()
                 }
-            }
-
-            override fun onFailure(call: Call<MutableList<Car>>, t: Throwable) {
-                view.hideLoading()
+            },{
                 view.showError()
-            }
-        })
+            })
+
+        compositeDisposable.add(disposable)
     }
 }

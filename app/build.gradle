@@ -45,11 +45,19 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.1.0'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-
+    def retrofit_version = '2.6.0'
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     //Servirá para converter nosso objeto vindo do JSON
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
+    //RxJava
+    implementation "io.reactivex.rxjava2:rxjava:2.2.6"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    // Koin for Android
+    implementation "org.koin:koin-android:2.1.5"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 }

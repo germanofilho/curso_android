@@ -17,6 +17,8 @@ import com.example.myapplication.feature.car.carlist.presentation.CarPresentatio
 import com.example.myapplication.feature.car.carlist.presentation.presenter.CarPresenterImpl
 import com.example.myapplication.feature.car.carlist.presentation.view.adapter.CarAdapter
 import kotlinx.android.synthetic.main.fragment_car_list.*
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 /**
  * A simple [Fragment] subclass.
@@ -27,9 +29,7 @@ class CarListFragment : Fragment(), CarPresentation.View {
         const val TAG = "CarListFragment"
     }
 
-    private val presenter : CarPresentation.Presenter by lazy {
-        CarPresenterImpl(this)
-    }
+    private val presenter: CarPresentation.Presenter by inject {parametersOf(this)}
 
     private val adapter : CarAdapter by lazy {
         CarAdapter(
